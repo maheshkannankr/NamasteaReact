@@ -1,0 +1,15 @@
+#parent {
+    background-color: blue;
+    padding: 20px;
+}
+
+#child {
+    background-color: pink;
+    padding: 20px;
+}
+
+#heading {
+    color: red;
+    background-color: antiquewhite;
+    padding: 20px;
+}
