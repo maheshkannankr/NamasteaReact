@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'PSRegular';
+    src: local('PSRegular'),
+        url('./PublicSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PSSemiBold';
+    src: local('PublicSansSemiBold'),
+        url('./PublicSans-SemiBold.ttf') format('truetype');
+
+}
+
+@font-face {
+    font-family: 'PSBold';
+    src: local('PSBold'),
+        url('./PublicSans-Bold.ttf') format('truetype');
+}
