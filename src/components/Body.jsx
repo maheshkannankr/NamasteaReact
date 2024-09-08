@@ -1,56 +1,87 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { restList } from '../utils/mockData';
 import RestCard from './RestCard';
 import Button from './Button';
+import ShimmerUI from './ShimmerUI';
 
 const Body = () => {
-  const [{ listOfRestarunts }, setState] = useState({
-    listOfRestarunts: restList,
-  });
+  const [listOfRestarunts, setListOfRestarunts] = useState([]);
+  const [filteredRest, setFilteredRest] = useState([]);
+  const [restSearchText, setRestSearchText] = useState('');
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await fetch(
+      'https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0066625&lng=80.2206369&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING'
+    );
+
+    const restList = await data.json();
+    const listOfRest = restList?.data?.cards?.filter((card) => {
+      return card.card.card.id === 'restaurant_grid_listing';
+    })[0]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+    setListOfRestarunts(listOfRest);
+    setFilteredRest(listOfRest);
+  };
 
   const onClickFilterButton = () => {
     let filteredRest = listOfRestarunts.filter((res) => {
-      return res.avgRating > 4;
+      return res.info.avgRating >= 4.5;
     });
-    setState((prevState) => ({
-      ...prevState,
-      listOfRestarunts: filteredRest,
-    }));
+    setFilteredRest(filteredRest);
   };
   const onClickClearFilterButton = () => {
-    setState((prevState) => ({
-      ...prevState,
-      listOfRestarunts: restList,
-    }));
+    setRestSearchText('');
+    setFilteredRest(listOfRestarunts);
+  };
+
+  const onChangeSearchText = (searchValue) => {
+    setRestSearchText(searchValue);
+  };
+
+  const onClickSearchButton = () => {
+    const filteredRest = listOfRestarunts.filter((rest) => {
+      return rest.info.name
+        .toLowerCase()
+        .includes(restSearchText.toLowerCase());
+    });
+    setRestSearchText('');
+    setFilteredRest(filteredRest);
   };
 
   return (
     <div className='body'>
-      <div className='b_search_container'></div>
-      <Button label={'Filter Top Restarunts'} onClick={onClickFilterButton} />
-      <Button label={'Clear Filter'} onClick={onClickClearFilterButton} />
-      <div className='b_restcard_container'>
-        {listOfRestarunts.map(
-          ({
-            name,
-            avgRating,
-            cloudinaryImageId,
-            areaName,
-            cuisines,
-            costForTwo,
-          }) => {
+      <div className='b_search_container'>
+        <input
+          className='search_field'
+          value={restSearchText}
+          onChange={(e) => onChangeSearchText(e.target.value)}
+        />
+        <Button label={'Search Restarunt'} onClick={onClickSearchButton} />
+        <Button label={'Filter Top Restarunts'} onClick={onClickFilterButton} />
+        <Button label={'Clear Filter'} onClick={onClickClearFilterButton} />
+      </div>
+
+      {!listOfRestarunts.length ? (
+        <ShimmerUI />
+      ) : (
+        <div className='b_restcard_container'>
+          {filteredRest.map((card, index) => {
             return (
               <RestCard
-                src={cloudinaryImageId}
-                restName={name}
-                rating={avgRating}
-                cuisine={cuisines.join(',')}
-                locality={areaName}
+                key={index}
+                src={card.info.cloudinaryImageId}
+                restName={card.info.name}
+                rating={card.info.avgRating}
+                cuisine={card.info.cuisines.join(',')}
+                locality={card.info.areaName}
               />
             );
-          }
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 };

@@ -11,7 +11,7 @@ const RestCard = ({ ...props }) => {
           <RatingStar />
           <label className='restCard_rating_text'>{props.rating}</label>
         </div>
-        <label className='restCard_cuisine_text'>{props.cuisine}</label>
+        {/* <label className='restCard_cuisine_text'>{props.cuisine}</label> */}
         <label className='restCard_rating_text'>{props.locality}</label>
       </div>
     </div>
