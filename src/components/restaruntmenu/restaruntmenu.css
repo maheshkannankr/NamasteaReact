@@ -1,0 +1,53 @@
+.restaruntmenu_container {
+    margin: 0 10rem;
+    flex-direction: column;
+}
+
+.rm_rest_title_text {}
+
+.rm_rest_detail_gradient_container {
+    padding: 1rem;
+    border-radius: 2.5rem;
+    background: rgb(185, 185, 185);
+    background: linear-gradient(337deg, rgba(185, 185, 185, 1) 0%, rgba(247, 247, 247, 1) 86%, rgba(247, 247, 247, 1) 100%);
+}
+
+.rm_rd_main_container {
+    flex: 1;
+    padding: 1rem;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    background-color: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.593);
+}
+
+.rm_rd_rating_container {
+    align-items: center;
+    gap: 1rem;
+}
+
+.rm_rd_rating_view {
+    align-items: center;
+}
+
+.rm_rd_cuisines_text {
+    color: rgb(255, 29, 29);
+    text-decoration: underline;
+}
+
+.rm_rd_delivery_time_row_container {
+    align-items: center;
+}
+
+.rm_rd_cuisines_container {}
+
+.rm_rd_delivery_time_container {}
+
+.rm_rd_distance_container {
+    align-items: center;
+}
+
+.rm_menu_title_container {
+    align-items: center;
+    justify-content: center;
+}

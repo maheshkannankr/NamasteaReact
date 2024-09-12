@@ -110,7 +110,7 @@ a:hover, a:focus {
 
 .h_navItems {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     flex-direction: row;
     list-style: none;
 }
@@ -198,26 +198,6 @@ a:hover, a:focus {
     font-family: PSRegular;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
-*, :after, :before {
-    box-sizing: border-box;
-}
-
-a:hover, a:focus {
-    outline: none;
-}
-
-.appContainer {
-    width: 100vw;
-    max-width: 1200px;
-    height: 100vh;
-    margin: auto;
-}
-
 .hwcentper {
     width: 100%;
     height: 100%;
@@ -232,12 +212,16 @@ a:hover, a:focus {
 .header_item {
     color: #000c;
     text-transform: uppercase;
-    padding: .8rem 1.6rem;
+    padding: .8rem 0.2rem;
     font-size: 12pt;
     font-weight: 400;
     text-decoration: none;
     display: block;
     position: relative;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .header_item:before, .header_item:after {
@@ -277,29 +261,6 @@ a:hover, a:focus {
     display: flex;
 }
 
-.h_logo {
-    flex: .1;
-    margin: auto;
-}
-
-.h_logo img {
-    max-width: 100%;
-}
-
-.h_navItemsContainer {
-    flex: .9;
-    justify-content: flex-end;
-    align-items: center;
-    display: flex;
-}
-
-.h_navItems {
-    flex-direction: row;
-    gap: 2rem;
-    list-style: none;
-    display: flex;
-}
-
 .b_search_container {
     flex: 1;
     display: flex;
@@ -323,6 +284,49 @@ a:hover, a:focus {
 
 .font_r {
     font-family: PSRegular;
+}
+
+.font_sb {
+    font-family: PSSemiBold;
+}
+
+.font_b {
+    font-family: PSBold;
+}
+
+.flex {
+    display: flex;
+}
+
+.p01gap {
+    gap: 0.1rem
+}
+.p02gap {
+    gap: 0.2rem
+}
+.p03gap {
+    gap: 0.3rem
+}
+.p04gap {
+    gap: 0.4rem
+}
+.p05gap {
+    gap: 0.5rem
+}
+.p06gap {
+    gap: 0.6rem
+}
+.p07gap {
+    gap: 0.7rem
+}
+.p08gap {
+    gap: 0.8rem
+}
+.p09gap {
+    gap: 0.9rem
+}
+.p1gap {
+    gap: 1rem
 }
 
 .rest_card_layout {
@@ -355,24 +359,4 @@ a:hover, a:focus {
     gap: .3rem;
     padding: 0 .5rem;
     display: flex;
-}
-
-.restCard_restName_text {
-    font-family: PSBold;
-    font-size: 1rem;
-}
-
-.restCard_ratingContainer {
-    gap: 1rem;
-    display: flex;
-}
-
-.restCard_rating_text {
-    font-family: PSRegular;
-    font-size: 1rem;
-}
-
-.restCard_cuisine_text {
-    font-family: PSRegular;
-    font-size: .8rem;
 }

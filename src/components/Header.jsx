@@ -1,6 +1,15 @@
+import { useState, useEffect } from 'react';
 import { LOGO_URL } from '../utils/constants';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
+  const [authBtnLable, setAuthBtnLable] = useState('Login');
+
+  const onClickLogin = () => {
+    setAuthBtnLable(authBtnLable === 'Login' ? 'Logout' : 'Login');
+  };
+
+  useEffect(() => {}, []);
   return (
     <div className='header'>
       <div className='h_logo'>
@@ -9,17 +18,28 @@ const Header = () => {
       <div className='h_navItemsContainer'>
         <ul className='h_navItems'>
           <li>
-            <a className='font_r header_item'>Home</a>
+            <Link to={'/'} className='font_r header_item pointer'>
+              Home
+            </Link>
           </li>
           <li>
-            <a className='font_r header_item'>About Us</a>
+            <Link to={'/about'} className='font_r header_item pointer'>
+              About Us
+            </Link>
           </li>
+          {/*           <li>
+            <Link to={'/'} className='font_r header_item pointer'>
+              Products
+            </Link>
+          </li> */}
           <li>
-            <a className='font_r header_item'>Products</a>
+            <Link to={'/contact'} className='font_r header_item pointer'>
+              Contact Us
+            </Link>
           </li>
-          <li>
-            <a className='font_r header_item'>Contact Us</a>
-          </li>
+          <div onClick={onClickLogin}>
+            <Link className='font_r header_item pointer'>{authBtnLable}</Link>
+          </div>
         </ul>
       </div>
     </div>
