@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './restaruntmenu.css';
 import ShimmerUI from '../ShimmerUI';
-import { RatingStar, DeliveryCycle, TitleDeco } from '../../../assets/svgs';
+import {
+  RatingStar,
+  DeliveryCycle,
+  TitleDeco,
+  VegIcon,
+  NonVegIcon,
+  DownArrow,
+} from '../../../assets/svgs';
 import GreyDot from '../greyDot/GreyDot';
 import HrDividerLine from '../hrLine/HrDividerLine';
+import { CDN_URL, FOOD_CATEGORY, RESTMENU_URL } from '../../utils/constants';
+import { useParams } from 'react-router-dom';
 
 const RestDetails = ({ ...props }) => {
   const renderRatingNPriceView = () => {
@@ -84,23 +93,122 @@ const RestDetails = ({ ...props }) => {
   );
 };
 
+const RestItemCard = ({ ...props }) => {
+  const { name, price, imageId, ratings, itemAttribute, description } =
+    props.item.card.info;
+
+  const getColorFromValue = (value) => {
+    // Ensure value is between 1 and 5
+    value = Math.max(1, Math.min(5, value));
+
+    // Convert value from 1-5 to 0-1 scale
+    const greenValue = (value - 1) / 4; // Range from 0 (for red) to 1 (for green)
+
+    // Generate RGB color. Red decreases as value increases, green increases.
+    const r = Math.round(255 * (1 - greenValue)); // Red decreases as value increases
+    const g = Math.round(255 * greenValue); // Green increases as value increases
+    const b = 0; // Keeping blue constant (no blue)
+
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
+  const itemCategoryIcon = () => {
+    return itemAttribute?.vegClassifier === FOOD_CATEGORY[0] ? (
+      <VegIcon />
+    ) : (
+      <NonVegIcon />
+    );
+  };
+
+  return (
+    <div className='rm_ri_main_container flex'>
+      <div className='rm_ri_detail_container'>
+        {itemCategoryIcon()}
+        <h5 className='font_sb'>{name}</h5>
+        <h5 className='font_sb'>{`₹ ${(price / 100).toFixed(2)}`}</h5>
+        {ratings?.aggregatedRating?.rating && (
+          <>
+            <label
+              className='rm_ri_rating_text_style font_r'
+              style={{
+                color: getColorFromValue(ratings.aggregatedRating.rating),
+              }}
+            >
+              {`${
+                ratings?.aggregatedRating?.rating
+                  ? ratings.aggregatedRating.rating
+                  : ''
+              }`}{' '}
+            </label>
+            <label className='rm_ri_rating_text_style font_r'>{`( ${ratings.aggregatedRating.ratingCountV2} )`}</label>
+          </>
+        )}
+        <p className='rm_ri_rating_text_style font_r'>{description}</p>
+      </div>
+      {imageId && <img className='rm_ri_img_style' src={CDN_URL + imageId} />}
+    </div>
+  );
+};
+
+const CategoryCollapsableCard = ({ ...props }) => {
+  const { itemCards, title } = props.card.card.card;
+
+  const onClickCollapsableMenu = (index) => {
+    if (props.onClickCollapsableMenu) {
+      props.onClickCollapsableMenu(index);
+    }
+  };
+
+  const arrowClassName = props.openState
+    ? 'rm_ri_collapsable_heading_arrow open'
+    : 'rm_ri_collapsable_heading_arrow';
+
+  const containerClassName = props.openState
+    ? 'rm_ri_collapsable_container flex p1gap'
+    : 'rm_ri_collapsable_container open flex p1gap';
+
+  return (
+    <div className={containerClassName}>
+      <div
+        className='rm_ri_collapsable_heading_container flex'
+        onClick={() => onClickCollapsableMenu(props.index)}
+      >
+        <h4 className='font_b'>{title}</h4>
+        <div className={arrowClassName}>
+          <DownArrow />
+        </div>
+      </div>
+      {props.openState && (
+        <div className='rm_ri_collapsable_item_container p1gap flex'>
+          {itemCards.map((item, index) => {
+            return <RestItemCard item={item} key={index} />;
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const RestaruntMenu = () => {
   const [restInfo, setRestInfo] = useState(null);
+  const [openIndex, setOpenIndex] = useState(0);
+
+  const { restId } = useParams();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const restData = await fetch(
-      'https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=13.0066625&lng=80.2206369&restaurantId=668737&catalog_qa=undefined&submitAction=ENTER'
-    );
+    const restData = await fetch(RESTMENU_URL + restId);
 
     const parsedData = await restData.json();
-    console.log('====================================');
-    console.log(parsedData.data.cards[2]?.card?.card?.info);
-    console.log('====================================');
+
     setRestInfo(parsedData.data);
+  };
+
+  const onClickCollapsableMenu = (index) => {
+    setOpenIndex(index);
   };
 
   if (restInfo === null) return <ShimmerUI />;
@@ -117,6 +225,12 @@ const RestaruntMenu = () => {
     cloudinaryImageId,
     totalRatingsString,
   } = restInfo?.cards[2]?.card?.card?.info;
+
+  const { cards } = restInfo?.cards[4].groupedCard.cardGroupMap.REGULAR;
+  let restItemsCardsList = cards.filter((item) => {
+    return item.card.card.hasOwnProperty('itemCards');
+  });
+
   return (
     <div className='restaruntmenu_container flex p1gap'>
       <h1 className='font_sb'>{name}</h1>
@@ -137,6 +251,25 @@ const RestaruntMenu = () => {
         <span className='font_r'>{'MENU'}</span>
         <TitleDeco />
       </div>
+      {restItemsCardsList?.map((item, index) => {
+        return openIndex === index ? (
+          <CategoryCollapsableCard
+            card={item}
+            key={index}
+            index={index}
+            openState={true}
+            onClickCollapsableMenu={onClickCollapsableMenu}
+          />
+        ) : (
+          <CategoryCollapsableCard
+            card={item}
+            key={index}
+            index={index}
+            openState={false}
+            onClickCollapsableMenu={onClickCollapsableMenu}
+          />
+        );
+      })}
     </div>
   );
 };

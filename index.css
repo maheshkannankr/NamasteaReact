@@ -179,6 +179,7 @@ a:hover, a:focus {
 }
 
 .restCard_restName_text {
+    text-decoration: none;
     font-family: PSBold;
     font-size: 1rem;
 }
@@ -301,30 +302,39 @@ a:hover, a:focus {
 .p01gap {
     gap: 0.1rem
 }
+
 .p02gap {
     gap: 0.2rem
 }
+
 .p03gap {
     gap: 0.3rem
 }
+
 .p04gap {
     gap: 0.4rem
 }
+
 .p05gap {
     gap: 0.5rem
 }
+
 .p06gap {
     gap: 0.6rem
 }
+
 .p07gap {
     gap: 0.7rem
 }
+
 .p08gap {
     gap: 0.8rem
 }
+
 .p09gap {
     gap: 0.9rem
 }
+
 .p1gap {
     gap: 1rem
 }
@@ -357,6 +367,6 @@ a:hover, a:focus {
     flex: .5;
     justify-content: flex-start;
     gap: .3rem;
-    padding: 0 .5rem;
+    padding: 0 1rem 1rem;
     display: flex;
 }

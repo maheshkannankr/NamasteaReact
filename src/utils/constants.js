@@ -4,4 +4,9 @@ const LOGO_URL =
 const CDN_URL =
   'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/';
 
-export { LOGO_URL, CDN_URL };
+const FOOD_CATEGORY = ['VEG', 'NONVEG'];
+
+const RESTMENU_URL =
+  'https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=13.0066625&lng=80.2206369&restaurantId=';
+
+export { LOGO_URL, CDN_URL, FOOD_CATEGORY, RESTMENU_URL };

@@ -3,6 +3,7 @@ import { restList } from '../utils/mockData';
 import RestCard from './RestCard';
 import Button from './Button';
 import ShimmerUI from './ShimmerUI';
+import { Link } from 'react-router-dom';
 
 const Body = () => {
   const [listOfRestarunts, setListOfRestarunts] = useState([]);
@@ -68,16 +69,21 @@ const Body = () => {
         <ShimmerUI />
       ) : (
         <div className='b_restcard_container'>
-          {filteredRest.map((card, index) => {
+          {filteredRest.map((card) => {
             return (
-              <RestCard
-                key={index}
-                src={card.info.cloudinaryImageId}
-                restName={card.info.name}
-                rating={card.info.avgRating}
-                cuisine={card.info.cuisines.join(',')}
-                locality={card.info.areaName}
-              />
+              <Link
+                key={card.info.id}
+                to={'/city/chennai/' + card.info.id}
+                style={{ textDecoration: 'none', color: '#000' }}
+              >
+                <RestCard
+                  src={card.info.cloudinaryImageId}
+                  restName={card.info.name}
+                  rating={card.info.avgRating}
+                  cuisine={card.info.cuisines.join(',')}
+                  locality={card.info.areaName}
+                />
+              </Link>
             );
           })}
         </div>

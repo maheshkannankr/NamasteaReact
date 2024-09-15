@@ -43,6 +43,8 @@
 
 .rm_rd_delivery_time_container {}
 
+
+
 .rm_rd_distance_container {
     align-items: center;
 }
@@ -50,4 +52,59 @@
 .rm_menu_title_container {
     align-items: center;
     justify-content: center;
+}
+
+.rm_ri_collapsable_container {
+    flex-direction: column;
+    border: 0.5px solid lightgray;
+    padding: 1rem;
+    border-radius: 1rem;
+    transition: all 1s ease;
+}
+
+.rm_ri_collapsable_container .open {
+    transition: max-height 1s ease, opacity 0.3s ease
+}
+
+.rm_ri_collapsable_heading_container {
+    flex: 1;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rm_ri_collapsable_heading_arrow {
+    transform: rotate(0deg);
+    transition: transform 0.5s cubic-bezier(.42, .22, .62, .81);
+}
+
+.rm_ri_collapsable_heading_arrow.open {
+    transform: rotate(180deg);
+    transition: transform 0.5s cubic-bezier(.42, .22, .62, .81);
+}
+
+.rm_ri_collapsable_item_container {
+    flex-direction: column;
+}
+
+.rm_ri_main_container {
+    height: 10rem;
+    padding: 1rem;
+}
+
+.rm_ri_rating_text_style {
+    font-size: 0.75rem;
+}
+
+.rm_ri_img_style {
+    flex: 1;
+    border-radius: 0.5rem;
+    max-width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.rm_ri_detail_container {
+    flex: 4;
+    flex-direction: column;
 }
