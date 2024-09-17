@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { LOGO_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
+import useOnlineStatus from '../utils/hooks/useOnlineStatus';
 
 const Header = () => {
   const [authBtnLable, setAuthBtnLable] = useState('Login');
+
+  const onLineStatus = useOnlineStatus();
 
   const onClickLogin = () => {
     setAuthBtnLable(authBtnLable === 'Login' ? 'Logout' : 'Login');
@@ -17,6 +20,7 @@ const Header = () => {
       </div>
       <div className='h_navItemsContainer'>
         <ul className='h_navItems'>
+          <li className='online_state flex'>{useOnlineStatus() ? '🟢' : '🔴'}</li>
           <li>
             <Link to={'/'} className='font_r header_item pointer'>
               Home
@@ -27,11 +31,6 @@ const Header = () => {
               About Us
             </Link>
           </li>
-          {/*           <li>
-            <Link to={'/'} className='font_r header_item pointer'>
-              Products
-            </Link>
-          </li> */}
           <li>
             <Link to={'/contact'} className='font_r header_item pointer'>
               Contact Us

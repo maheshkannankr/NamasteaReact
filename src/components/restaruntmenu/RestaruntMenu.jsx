@@ -11,8 +11,9 @@ import {
 } from '../../../assets/svgs';
 import GreyDot from '../greyDot/GreyDot';
 import HrDividerLine from '../hrLine/HrDividerLine';
-import { CDN_URL, FOOD_CATEGORY, RESTMENU_URL } from '../../utils/constants';
+import { CDN_URL, FOOD_CATEGORY } from '../../utils/constants';
 import { useParams } from 'react-router-dom';
+import useRestaruntMenu from '../../utils/hooks/useRestaruntMenu';
 
 const RestDetails = ({ ...props }) => {
   const renderRatingNPriceView = () => {
@@ -190,22 +191,11 @@ const CategoryCollapsableCard = ({ ...props }) => {
 };
 
 const RestaruntMenu = () => {
-  const [restInfo, setRestInfo] = useState(null);
   const [openIndex, setOpenIndex] = useState(0);
 
   const { restId } = useParams();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const restData = await fetch(RESTMENU_URL + restId);
-
-    const parsedData = await restData.json();
-
-    setRestInfo(parsedData.data);
-  };
+  const restInfo = useRestaruntMenu(restId);
 
   const onClickCollapsableMenu = (index) => {
     setOpenIndex(index);

@@ -44,6 +44,10 @@ a:hover, a:focus {
     text-transform: uppercase;
 }
 
+.online_state {
+    align-items: center;
+}
+
 .header_item:before, .header_item:after {
     position: absolute;
     top: 100%;
@@ -156,7 +160,7 @@ a:hover, a:focus {
 }
 
 .rest_card_layout:hover {
-    scale: 0.95;
+    scale: 0.98;
     z-index: 2;
     box-shadow: 2px 2px 2px #ddd;
 }
@@ -346,12 +350,6 @@ a:hover, a:focus {
     max-height: 20rem;
     transition: all .5s;
     display: flex;
-}
-
-.rest_card_layout:hover {
-    z-index: 2;
-    scale: .95;
-    box-shadow: 2px 2px 2px #ddd;
 }
 
 .restCard_img_style {
